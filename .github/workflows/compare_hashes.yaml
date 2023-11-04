@@ -9,17 +9,28 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                file: [dbplyr-NEWS-old.md, dplyr-NEWS.md]
-                url: ['https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md', 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md']
+                package: 
+                 [
+                    { name: dbplyr, file: dbplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md' }, 
+                    { name: lubridate, file: lubridate-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/lubridate/main/NEWS.md' },
+                    { name: dplyr, file: dplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md'}, {name:},
+                    { name: data.table, file: data.table-NEWS.md, url: 'https://raw.githubusercontent.com/Rdatatable/data.table/master/NEWS.md'},
+                    { name: dtplyr, file: dtplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dtplyr/main/NEWS.md'},
+                    { name: duckdb-r, file: duckdb-r-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckdb-r/main/NEWS.md'},
+                    {name: r-polars, file: r-polars-NEWS.md, url: 'https://raw.githubusercontent.com/pola-rs/rpolars/main/NEWS.md'},
+                    {name: stringr, file: stringr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/stringr/main/NEWS.md'},
+                    {name: duckplyr, file: duckplyr-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckplyr/main/NEWS.md'},
+                    {name: tidypolars, file: tidypolars-NEWS.md, url: 'https://raw.githubusercontent.com/etiennebacher/tidypolars/main/NEWS.md'},
+                ]
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
             - name: Get local file hash
               id: local-hash
-              run: echo "::set-output name=hash::$(md5sum ${{ matrix.file }} | cut -d ' ' -f 1)"
+              run: echo "::set-output name=hash::$(md5sum ${{ matrix.package.file }} | cut -d ' ' -f 1)"
             - name: Get remote file hash
               id: remote-hash
-              run: echo "::set-output name=hash::$(curl -s ${{ matrix.url }} | md5sum | cut -d ' ' -f 1)"
+              run: echo "::set-output name=hash::$(curl -s ${{ matrix.package.url }} | md5sum | cut -d ' ' -f 1)"
             - name: Compare hashes
               run: |
                     if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
