@@ -38,7 +38,7 @@ jobs:
                   echo "file_path=changelogs/${{ matrix.package.file }}" >> $GITHUB_OUTPUT
         - name: Get remote file hash
           id: remote-hash
-          run: echo "::set-output name=hash::$(${{ matrix.package.file }} | md5sum | cut -d ' ' -f 1)"
+          run: echo "hash=$(${{ steps.remote-file.outputs.file_path }} | md5sum | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
         - name: Update changed files
           if: ${{ steps.local-hash.outputs.hash != steps.remote-hash.outputs.hash }}
           run: |
