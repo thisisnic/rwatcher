@@ -13,7 +13,7 @@ jobs:
                  [
                     { name: dbplyr, file: dbplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md' }, 
                     { name: lubridate, file: lubridate-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/lubridate/main/NEWS.md' },
-                    { name: dplyr, file: dplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md'}, {name:},
+                    { name: dplyr, file: dplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md'}, 
                     { name: data.table, file: data.table-NEWS.md, url: 'https://raw.githubusercontent.com/Rdatatable/data.table/master/NEWS.md'},
                     { name: dtplyr, file: dtplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dtplyr/main/NEWS.md'},
                     { name: duckdb-r, file: duckdb-r-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckdb-r/main/NEWS.md'},
