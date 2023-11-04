@@ -40,18 +40,22 @@ jobs:
                                 echo "Hashes do not match!"
                                 curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
                                 echo "Sending email notification..."
-                                uses: dawidd6/action-send-mail@v3
-                                with:
-                                        server_address: smtp.gmail.com
-                                        server_port: 465
-                                        username: ${{ secrets.MAIL_USERNAME }}
-                                        password: ${{ secrets.MAIL_PASSWORD }}
-                                        subject: "${matrix.package.name} update"
-                                        body: "${matrix.package.name} has been updated! Please check the changelog at ${matrix.package.url}."
-                                        to: ${{ secrets.MAIL_RECIPIENT }}
+                                
                                 git config --global user.email "github-actions[bot]@users.noreply.github.com"
                                 git config --global user.name "GHA Bot"
                                 git add changelogs/${{ matrix.package.file }}
                                 git commit -m "Update ${matrix.package.name} changelog"
                                 git push
                         fi
+        - name: Send email notification
+          if: ${{ steps.compare-hashes.outputs.hash != steps.remote-hash.outputs.hash }}
+          uses: dawidd6/action-send-mail@v3
+          with:
+            server_address: smtp.gmail.com
+            server_port: 465
+            username: ${{ secrets.MAIL_USERNAME }}
+            password: ${{ secrets.MAIL_PASSWORD }}
+            subject: "${matrix.package.name} update"
+            body: "${matrix.package.name} has been updated! Please check the changelog at ${matrix.package.url}."
+            to: ${{ secrets.MAIL_RECIPIENT }}
+        
