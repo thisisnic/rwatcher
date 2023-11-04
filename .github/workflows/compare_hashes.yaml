@@ -34,8 +34,8 @@ jobs:
         - name: Get remote file
           id: remote-file
           run: |
-                  curl -s ${{ matrix.package.url }} > ${{ matrix.package.file }}
-                  echo "::set-output name=file_path::${{ matrix.package.file }}"
+                  curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
+                  echo "::set-output name=file_path::changelogs/${{ matrix.package.file }}"
         - name: Get remote file hash
           id: remote-hash
           run: echo "::set-output name=hash::$(${{ matrix.package.file }} | md5sum | cut -d ' ' -f 1)"
