@@ -10,7 +10,7 @@ jobs:
         strategy:
             matrix:
                 file: [dbplyr-NEWS-old.md, dplyr-NEWS.md]
-                url: [https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md, https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md]
+                url: ['https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md', 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md']
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
