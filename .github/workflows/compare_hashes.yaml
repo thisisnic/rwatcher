@@ -38,6 +38,7 @@ jobs:
                         echo "Hashes match!"
                     else
                         echo "Hashes do not match!"
+                        curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
                     fi
                         
               
