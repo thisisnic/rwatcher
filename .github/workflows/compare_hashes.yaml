@@ -9,15 +9,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-                uses: actions/checkout@v2
+              uses: actions/checkout@v2
             - name: Get local file hash
-                id: local-hash
-                run: echo "::set-output name=hash::$(md5sum dbplyr-NEWS.md | cut -d ' ' -f 1)"
+              id: local-hash
+              run: echo "::set-output name=hash::$(md5sum dbplyr-NEWS.md | cut -d ' ' -f 1)"
             - name: Get remote file hash
-                id: remote-hash
-                run: echo "::set-output name=hash::$(curl -s https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md | md5sum | cut -d ' ' -f 1)"
+              id: remote-hash
+              run: echo "::set-output name=hash::$(curl -s https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md | md5sum | cut -d ' ' -f 1)"
             - name: Compare hashes
-                run: |
+              run: |
                     if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
                         echo "Hashes match!"
                     else
