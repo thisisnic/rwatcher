@@ -12,7 +12,7 @@ jobs:
               uses: actions/checkout@v2
             - name: Get local file hash
               id: local-hash
-              run: echo "::set-output name=hash::$(md5sum dbplyr-NEWS.md | cut -d ' ' -f 1)"
+              run: echo "::set-output name=hash::$(md5sum dbplyr-NEWS-old.md | cut -d ' ' -f 1)"
             - name: Get remote file hash
               id: remote-hash
               run: echo "::set-output name=hash::$(curl -s https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md | md5sum | cut -d ' ' -f 1)"
