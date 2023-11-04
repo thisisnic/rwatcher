@@ -34,12 +34,11 @@ jobs:
           run: echo "::set-output name=hash::$(curl -s ${{ matrix.package.url }} | md5sum | cut -d ' ' -f 1)"
         - name: Compare hashes
           run: |
-                        if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
-                                echo "Hashes match!"
+                if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
+                         echo "Hashes match!"
                         else
                                 echo "Hashes do not match!"
                                 curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
-                                echo "Sending email notification..."
                                 
                                 git config --global user.email "github-actions[bot]@users.noreply.github.com"
                                 git config --global user.name "GHA Bot"
@@ -48,15 +47,15 @@ jobs:
                                 git push
                         fi
         - name: Send email notification
-          if: ${{ steps.compare-hashes.outputs.hash != steps.remote-hash.outputs.hash }}
+          if: ${{ steps.local-hash.outputs.hash != steps.remote-hash.outputs.hash }}
           uses: dawidd6/action-send-mail@v3
           with:
             server_address: smtp.gmail.com
             server_port: 465
             username: ${{ secrets.MAIL_USERNAME }}
             password: ${{ secrets.MAIL_PASSWORD }}
-            subject: "${matrix.package.name} update"
-            body: "${matrix.package.name} has been updated! Please check the changelog at ${matrix.package.url}."
+            subject: "${{matrix.package.name}} update"
+            body: "${{matrix.package.name}} has been updated! Please check the changelog at ${{matrix.package.url}}."
             to: ${{ secrets.MAIL_RECIPIENT }}
             from: ${{ secrets.MAIL_USERNAME}}
         
