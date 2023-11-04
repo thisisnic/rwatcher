@@ -8,6 +8,8 @@ jobs:
   compare-hashes:
     name: ${{matrix.package.name}} updates
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
         matrix:
           package: 
@@ -37,9 +39,7 @@ jobs:
                 if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
                          echo "Hashes match!"
                         else
-                                echo "Hashes do not match!"
-                                curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
-                                
+                                echo "Hashes do not match!"                               
                                 git config --global user.email "github-actions[bot]@users.noreply.github.com"
                                 git config --global user.name "GHA Bot"
                                 git add changelogs/${{ matrix.package.file }}
