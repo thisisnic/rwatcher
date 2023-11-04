@@ -1,4 +1,4 @@
-name: Compare Hashes
+name: Check for package updates
 
 on:
     push:
@@ -38,5 +38,6 @@ jobs:
                         echo "Hashes match!"
                     else
                         echo "Hashes do not match!"
+                    fi
                         
               
