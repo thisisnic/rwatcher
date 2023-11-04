@@ -1,44 +1,57 @@
 name: Check for package updates
 
 on:
-    push:
-        branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
-    compare-hashes:
-        name: ${{matrix.package.name}} updates
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                package: 
-                 [
-                    { name: dbplyr, file: dbplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md' }, 
-                    { name: lubridate, file: lubridate-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/lubridate/main/NEWS.md' },
-                    { name: dplyr, file: dplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md'}, 
-                    { name: data.table, file: data.table-NEWS.md, url: 'https://raw.githubusercontent.com/Rdatatable/data.table/master/NEWS.md'},
-                    { name: dtplyr, file: dtplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dtplyr/main/NEWS.md'},
-                    { name: duckdb-r, file: duckdb-r-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckdb-r/main/NEWS.md'},
-                    { name: r-polars, file: r-polars-NEWS.md, url: 'https://raw.githubusercontent.com/pola-rs/rpolars/main/NEWS.md'},
-                    { name: stringr, file: stringr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/stringr/main/NEWS.md'},
-                    { name: duckplyr, file: duckplyr-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckplyr/main/NEWS.md'},
-                    { name: tidypolars, file: tidypolars-NEWS.md, url: 'https://raw.githubusercontent.com/etiennebacher/tidypolars/main/NEWS.md'},
-                ]
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-            - name: Get local file hash
-              id: local-hash
-              run: echo "::set-output name=hash::$(md5sum changelogs/${{ matrix.package.file }} | cut -d ' ' -f 1)"
-            - name: Get remote file hash
-              id: remote-hash
-              run: echo "::set-output name=hash::$(curl -s ${{ matrix.package.url }} | md5sum | cut -d ' ' -f 1)"
-            - name: Compare hashes
-              run: |
-                    if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
-                        echo "Hashes match!"
-                    else
-                        echo "Hashes do not match!"
-                        curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
-                    fi
-                        
-              
+  compare-hashes:
+    name: ${{matrix.package.name}} updates
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          package: 
+            [
+                { name: dbplyr, file: dbplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dbplyr/main/NEWS.md' }, 
+                { name: lubridate, file: lubridate-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/lubridate/main/NEWS.md' },
+                { name: dplyr, file: dplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dplyr/main/NEWS.md'}, 
+                { name: data.table, file: data.table-NEWS.md, url: 'https://raw.githubusercontent.com/Rdatatable/data.table/master/NEWS.md'},
+                { name: dtplyr, file: dtplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dtplyr/main/NEWS.md'},
+                { name: duckdb-r, file: duckdb-r-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckdb-r/main/NEWS.md'},
+                { name: r-polars, file: r-polars-NEWS.md, url: 'https://raw.githubusercontent.com/pola-rs/rpolars/main/NEWS.md'},
+                { name: stringr, file: stringr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/stringr/main/NEWS.md'},
+                { name: duckplyr, file: duckplyr-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckplyr/main/NEWS.md'},
+                { name: tidypolars, file: tidypolars-NEWS.md, url: 'https://raw.githubusercontent.com/etiennebacher/tidypolars/main/NEWS.md'},
+            ]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Get local file hash
+          id: local-hash
+          run: echo "::set-output name=hash::$(md5sum changelogs/${{ matrix.package.file }} | cut -d ' ' -f 1)"
+        - name: Get remote file hash
+          id: remote-hash
+          run: echo "::set-output name=hash::$(curl -s ${{ matrix.package.url }} | md5sum | cut -d ' ' -f 1)"
+        - name: Compare hashes
+          run: |
+                        if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
+                                echo "Hashes match!"
+                        else
+                                echo "Hashes do not match!"
+                                curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
+                                echo "Sending email notification..."
+                                uses: dawidd6/action-send-mail@v3
+                                with:
+                                        server_address: smtp.gmail.com
+                                        server_port: 465
+                                        username: ${{ secrets.MAIL_USERNAME }}
+                                        password: ${{ secrets.MAIL_PASSWORD }}
+                                        subject: "${matrix.package.name} update"
+                                        body: "${matrix.package.name} has been updated! Please check the changelog at ${matrix.package.url}."
+                                        to: ${{ secrets.MAIL_RECIPIENT }}
+                                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                                git config --global user.name "GHA Bot"
+                                git add changelogs/${{ matrix.package.file }}
+                                git commit -m "Update ${matrix.package.name} changelog"
+                                git push
+                        fi
