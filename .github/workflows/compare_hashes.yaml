@@ -31,9 +31,14 @@ jobs:
         - name: Get local file hash
           id: local-hash
           run: echo "::set-output name=hash::$(md5sum changelogs/${{ matrix.package.file }} | cut -d ' ' -f 1)"
+        - name: Get remote file
+          id: remote-file
+          run: |
+                  curl -s ${{ matrix.package.url }} > ${{ matrix.package.file }}
+                  echo "::set-output name=file_path::${{ matrix.package.file }}"
         - name: Get remote file hash
           id: remote-hash
-          run: echo "::set-output name=hash::$(curl -s ${{ matrix.package.url }} | md5sum | cut -d ' ' -f 1)"
+          run: echo "::set-output name=hash::$(${{ matrix.package.file }} | md5sum | cut -d ' ' -f 1)"
         - name: Compare hashes
           run: |
                 if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
