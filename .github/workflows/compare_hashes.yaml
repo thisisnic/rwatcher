@@ -6,6 +6,7 @@ on:
 
 jobs:
     compare-hashes:
+        name: ${{matrix.package.name}} updates
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -17,10 +18,10 @@ jobs:
                     { name: data.table, file: data.table-NEWS.md, url: 'https://raw.githubusercontent.com/Rdatatable/data.table/master/NEWS.md'},
                     { name: dtplyr, file: dtplyr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/dtplyr/main/NEWS.md'},
                     { name: duckdb-r, file: duckdb-r-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckdb-r/main/NEWS.md'},
-                    {name: r-polars, file: r-polars-NEWS.md, url: 'https://raw.githubusercontent.com/pola-rs/rpolars/main/NEWS.md'},
-                    {name: stringr, file: stringr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/stringr/main/NEWS.md'},
-                    {name: duckplyr, file: duckplyr-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckplyr/main/NEWS.md'},
-                    {name: tidypolars, file: tidypolars-NEWS.md, url: 'https://raw.githubusercontent.com/etiennebacher/tidypolars/main/NEWS.md'},
+                    { name: r-polars, file: r-polars-NEWS.md, url: 'https://raw.githubusercontent.com/pola-rs/rpolars/main/NEWS.md'},
+                    { name: stringr, file: stringr-NEWS.md, url: 'https://raw.githubusercontent.com/tidyverse/stringr/main/NEWS.md'},
+                    { name: duckplyr, file: duckplyr-NEWS.md, url: 'https://raw.githubusercontent.com/duckdb/duckplyr/main/NEWS.md'},
+                    { name: tidypolars, file: tidypolars-NEWS.md, url: 'https://raw.githubusercontent.com/etiennebacher/tidypolars/main/NEWS.md'},
                 ]
         steps:
             - name: Checkout code
