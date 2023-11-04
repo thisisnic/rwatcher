@@ -48,6 +48,7 @@ jobs:
                                 git config --global user.email "github-actions[bot]@users.noreply.github.com"
                                 git config --global user.name "GHA Bot"
                                 git add changelogs/${{ matrix.package.file }}
+                                git pull --ff-only
                                 git commit -m "Update ${{matrix.package.name}} changelog"
                                 git push
                         fi
