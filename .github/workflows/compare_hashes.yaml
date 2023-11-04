@@ -39,19 +39,16 @@ jobs:
         - name: Get remote file hash
           id: remote-hash
           run: echo "::set-output name=hash::$(${{ matrix.package.file }} | md5sum | cut -d ' ' -f 1)"
-        - name: Compare hashes
+        - name: Update changed files
+          if: ${{ steps.local-hash.outputs.hash != steps.remote-hash.outputs.hash }}
           run: |
-                if [ "${{ steps.local-hash.outputs.hash }}" = "${{ steps.remote-hash.outputs.hash }}" ]; then
-                         echo "Hashes match!"
-                        else
-                                echo "Hashes do not match!"                               
-                                git config --global user.email "github-actions[bot]@users.noreply.github.com"
-                                git config --global user.name "GHA Bot"
-                                git add changelogs/${{ matrix.package.file }}
-                                git pull --ff-only
-                                git commit -m "Update ${{matrix.package.name}} changelog"
-                                git push
-                        fi
+            echo "Hashes do not match!"                               
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "GHA Bot"
+            git add changelogs/${{ matrix.package.file }}
+            git pull --ff-only
+            git commit -m "Update ${{matrix.package.name}} changelog"
+            git push
         - name: Send email notification
           if: ${{ steps.local-hash.outputs.hash != steps.remote-hash.outputs.hash }}
           uses: dawidd6/action-send-mail@v3
