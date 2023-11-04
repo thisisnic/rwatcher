@@ -30,12 +30,12 @@ jobs:
           uses: actions/checkout@v2
         - name: Get local file hash
           id: local-hash
-          run: echo "::set-output name=hash::$(md5sum changelogs/${{ matrix.package.file }} | cut -d ' ' -f 1)"
+          run: echo "hash=$(md5sum changelogs/${{ matrix.package.file }} | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
         - name: Get remote file
           id: remote-file
           run: |
                   curl -s ${{ matrix.package.url }} > changelogs/${{ matrix.package.file }}
-                  echo "::set-output name=file_path::changelogs/${{ matrix.package.file }}"
+                  echo "file_path=changelogs/${{ matrix.package.file }}" >> $GITHUB_OUTPUT
         - name: Get remote file hash
           id: remote-hash
           run: echo "::set-output name=hash::$(${{ matrix.package.file }} | md5sum | cut -d ' ' -f 1)"
