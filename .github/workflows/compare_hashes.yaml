@@ -51,8 +51,7 @@ jobs:
             git commit -m "Update ${{matrix.package.name}} changelog"
             git push
         - name: Send email notification
-          # if: ${{ steps.local-hash.outputs.local_hash != steps.remote-hash.outputs.remote_hash }}
-          if: false
+          if: ${{ steps.local-hash.outputs.local_hash != steps.remote-hash.outputs.remote_hash }}
           uses: dawidd6/action-send-mail@v3
           with:
             server_address: smtp.gmail.com
