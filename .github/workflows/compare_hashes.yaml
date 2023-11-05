@@ -43,13 +43,13 @@ jobs:
           if: ${{ steps.local-hash.outputs.local_hash != steps.remote-hash.outputs.remote_hash }}
           run: |
             echo "Hashes do not match!"   
-            echo $GITHUB_OUTPUT                            
-            #git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            #git config --global user.name "GHA Bot"
-            #git add changelogs/${{ matrix.package.file }}
-            #git pull --ff-only
-            #git commit -m "Update ${{matrix.package.name}} changelog"
-            #git push
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "GHA Bot"
+            cp tmp/${{ matrix.package.file }} changelogs/${{ matrix.package.file }}
+            git add changelogs/${{ matrix.package.file }}
+            git pull --ff-only
+            git commit -m "Update ${{matrix.package.name}} changelog"
+            git push
         - name: Send email notification
           # if: ${{ steps.local-hash.outputs.local_hash != steps.remote-hash.outputs.remote_hash }}
           if: false
