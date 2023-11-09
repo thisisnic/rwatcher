@@ -1,65 +1,46 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
-# duckplyr 0.2.1.9003 (2023-10-18)
+# duckplyr 0.2.3.9000 (2023-11-09)
+
+## Chore
+
+  - Sync generated files (#71).
+
+## Uncategorized
+
+  - Merge branch 'cran-0.2.3'.
+
+
+# duckplyr 0.2.3 (2023-11-08)
+
+## Performance
+
+- Join using `IS NOT DISTINCT FROM` for faster execution (duckdb/duckdb-r#41, #68).
 
 ## Documentation
 
 - Add stability to README output (@maelle, #62, #65).
 
 
-# duckplyr 0.2.1.9002 (2023-10-16)
+# duckplyr 0.2.2 (2023-10-16)
 
 ## Bug fixes
 
 - `summarise()` keeps `"duckplyr_df"` class (#63, #64).
 
-
-# duckplyr 0.2.1.9001 (2023-10-16)
-
-## Chore
-
-  - Skip tests that give different output on dev tidyselect.
-
-  - Require latest duckdb.
-
-  - Import utils::globalVariables().
-
-  - Clean up imports.
-
-## Documentation
-
-  - Small README improvements (@maelle, #34, #57).
-
-
-# duckplyr 0.2.1.9000 (2023-10-05)
-
-## Bug fixes
-
-  - Fix compatibility with duckdb \>= 0.9.0.
+- Fix compatibility with duckdb \>= 0.9.1.
 
 ## Chore
 
-  - Use fledge workflow.
+- Skip tests that give different output on dev tidyselect.
 
-  - Adapt path.
-
-  - Code formatting.
-
-  - Replace last `:::` with `$`.
-
-  - Re-sync.
-
-  - `:::` -\> `$` for access of private functions.
-
-  - Sync.
+- Import `utils::globalVariables()`.
 
 ## Documentation
 
-  - Tweak (#56).
-    
-    Closes #56.
+- Small README improvements (@maelle, #34, #57).
 
-  - Fix 301 in README.
+- Fix 301 in README.
 
 
 # duckplyr 0.2.1 (2023-09-16)
