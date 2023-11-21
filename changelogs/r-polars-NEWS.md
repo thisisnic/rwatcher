@@ -31,14 +31,24 @@
 - New methods `$write_json()` and `$write_ndjson()` for DataFrame (#502).
 - Removed argument `name` in `pl$date_range()`, which was deprecated for a while
   (#503).
-- New private method `.pr$DataFrame$drop_all_in_place(df)` to drop `DataFrame` in-place,
- to release memory without invoking gc(). However, if there are other strong references to any of
- the underlying Series or arrow arrays, that memory will specifically not be released. This method
- is aimed for r-polars extensions, and will be kept stable as much as possible (#504).
+- New private method `.pr$DataFrame$drop_all_in_place(df)` to drop `DataFrame` 
+  in-place, to release memory without invoking gc(). However, if there are other
+  strong references to any of the underlying Series or arrow arrays, that memory 
+  will specifically not be released. This method is aimed for r-polars extensions, 
+  and will be kept stable as much as possible (#504).
 - New functions `pl$min_horizontal()`, `pl$max_horizontal()`, `pl$sum_horizontal()`,
   `pl$all_horizontal()`, `pl$any_horizontal()` (#508).
 - New generic functions `as_polars_df()` and `as_polars_lf()` to create polars DataFrames
   and LazyFrames (#519).
+- New method `$ungroup()` for `GroupBy` and `LazyGroupBy` (#522).
+- New method `$rolling()` to apply an Expr over a rolling window based on 
+  date/datetime/numeric indices (#470).
+- New methods of the Expressions class, `$floor_div()`, `$mod()`, `$eq_missing()`
+  and `$neq_missing()`. The base R operators `%/%` and `%%` for Expressions are
+  now translated to `$floor_div()` and `$mod()` (#523).
+  - Note that `$mod()` of Polars is different from the R operator `%%`, which is
+    not guaranteed `x == (x %% y) + y * (x %/% y)`.
+    Please check the upstream issue [pola-rs/polars#10570](https://github.com/pola-rs/polars/issues/10570).
 
 # polars 0.10.1
 
