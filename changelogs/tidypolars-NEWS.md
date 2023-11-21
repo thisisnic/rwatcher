@@ -1,5 +1,9 @@
 # tidypolars (development)
 
+**Breaking changes**
+
+* It is no longer possible to pass a list in `rename()`. 
+
 **New features**
 
 * The argument `with_string_cache` in `as_polars()` now enables the string cache
@@ -8,7 +12,8 @@
 * Better error message in `filter()` when comparing factors to strings while the
   string cache is disabled.
   
-* Basic support for `strptime()`.
+* Basic support for `strptime()`. It is possible to use `strptime(*, strict = FALSE)`
+  to not error when the parsing of some characters fails.
 
 * New argument `.by` in `filter()`, `mutate()`, and `summarize()`, and new 
   argument `by` in the `slice_*()` functions. This allows to do operations on
@@ -16,11 +21,15 @@
   [`dplyr` vignette](https://dplyr.tidyverse.org/reference/dplyr_by.html) for 
   more information (#59).
   
+* `rename()` now accepts unquoted names both old and new names.
+
 **Bug fixes**
 
 * Improve robustness of sequential expressions in `mutate()` and `summarize()` 
   (i.e expressions that should be run one after the other because they depend on
   variables created in the same call) (#58).
+  
+* `relocate()` now works correctly when `.after = last_col()`.
   
 **Misc**
 
