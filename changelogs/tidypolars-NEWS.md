@@ -5,10 +5,20 @@
 * `across()` now errors if the argument `.cols` is not provided (either named or
   unnamed). This behavior was deprecated in `dplyr` 1.1.0.
   
+* It is no longer possible to use `!` in `arrange()` to sort by decreasing order,
+  for compatibility with `dplyr::arrange()`. Use `-` or `desc()` instead.
+  
 **New features**
 
 * `summarize()` now works on ungrouped data and returns a 1-row output.
+
+* It is now possible to use `desc(x1)` in `arrange()` to sort in decreasing 
+  order of `x1` (this is equivalent to `-x1`).
   
+* Add support for argument `names_prefix` in `pivot_longer()` and `pivot_wider()`.
+
+* Add support for argument `names_sep` in `pivot_wider()`.
+
 **Bug fixes**
 
 * `summarize()` no longer errors when `across(everything(), ...)` is used with
