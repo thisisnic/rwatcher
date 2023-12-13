@@ -28,6 +28,11 @@
   (among other things) as arguments of custom functions. See the ["Programming
   with dplyr" vignette](https://dplyr.tidyverse.org/dev/articles/programming.html)
   for some examples.
+  
+* `bind_cols_polars()` now works with two `LazyFrame`s, but not more.
+
+* Support for `.env$` and `.data$` pronouns in expressions of `filter()`, 
+  `mutate()` and `summarize()`.
 
 **Bug fixes**
 
@@ -36,6 +41,8 @@
 
 * All `*_join()` functions no longer error when a named vector is provided in 
   the argument `by`.
+  
+* Expressions with values only are not named "literal" anymore.
 
 **Misc**
 
