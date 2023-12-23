@@ -1,5 +1,11 @@
 # dbplyr (development version)
 
+* SQL server: `filter()` does a better job of converting logical vectors 
+  from bit to boolean (@ejneer, #1288). 
+
+* Oracle: Added support for `str_replace()` and `str_replace_all()` via
+  `REGEXP_REPLACE()` (@thomashulst, #1402).
+
 * Allow additional arguments to be passed from `compute()` all the way to 
   `sql_query_save()`-method (@rsund).
 
