@@ -1,5 +1,11 @@
 # dbplyr (development version)
 
+* Namespaced dplyr calls now error if the function doesn't exist, or 
+  a translation is not available (#1426).
+
+* `db_sql_render()` correctly passes on `...` when re-calling with 
+  `sql_options` set (#1394).
+
 * `-1 + x` is now translated correctly (#1420).
 
 * SQL server: clear error if you attempt to use `n_distinct()` in `mutate()`
