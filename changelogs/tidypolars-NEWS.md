@@ -18,12 +18,13 @@
 * Add support for `group_vars()` and `group_keys()` (#81).
 
 * **Experimental** support of `rowwise()`. For now, this is limited to a few 
-  functions: `mean()`, `min()`, `max()`, `sum()`, `all()`, `any()`. `rowwise()`
-  and `group_by()` cannot be used at the same time (#40).
+  functions: `mean()`, `median()`, `min()`, `max()`, `sum()`, `all()`, `any()`. 
+  `rowwise()` and `group_by()` cannot be used at the same time (#40).
   
 * All functions that return a polars `Data/LazyFrame` now add the class 
   `"tidypolars"` to the output (#86).
 
+* Support `which.min()` and `which.max()`.
 
 # tidypolars 0.5.0
 
