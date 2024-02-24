@@ -11,6 +11,12 @@
   to `TRUE`, this enabled the string cache globally, which could lead to 
   undesirable side effects.
   
+* `to_r()` is deprecated and will be removed in 0.7.0. Use `as.data.frame()` or
+  `as_tibble()` instead. This used to silently return a `LazyFrame` if the 
+  input was `LazyFrame`. It now automatically collects the `LazyFrame` (#88).
+  
+* `pull()` nows automatically collects input `LazyFrame` (#89).
+  
 ## New features
 
 * Add support for argument `.keep` in `mutate()` (#80).
@@ -24,7 +30,8 @@
 * All functions that return a polars `Data/LazyFrame` now add the class 
   `"tidypolars"` to the output (#86).
 
-* Support `which.min()` and `which.max()`.
+* Support `which.min()`, `which.max()`, `dplyr::n()`.
+
 
 # tidypolars 0.5.0
 
