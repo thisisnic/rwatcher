@@ -2,7 +2,16 @@
 
 ## Polars R Package (development version)
 
-### Breaking changes
+### Breaking changes due to Rust-polars update
+
+-   rust-polars is updated to 0.38.0 (#865).
+    -   in `$pivot()`, arguments `aggregate_function`, `maintain_order`, 
+        `sort_columns` and `separator` must be named. Values that are passed
+        by position are ignored.
+    -   in `$describe()`, the name of the first column changed from `"describe"`
+        to `"statistic"`.
+
+### Other breaking changes
 
 -   Removed `as.list()` for class `RPolarsExpr` as it is a simple wrapper around
     `list()` (#843).
@@ -32,6 +41,11 @@
 -   `<DataFrame>$head()` and `<DataFrame>$tail()` methods now support negative
     row numbers (#840).
 -   `$group_by()` now works with named expressions (#846).
+-   New methods for the `arr` subnamespace: `$median()`, `$var()`, `$std()`, 
+    `$shift()`, `$to_struct()` (#867).
+-   `$min()` and `max()` now work on categorical variables (#868).
+-   New methods for the `list` subnamespace: `$n_unique()`, `$gather_every()` 
+    (#869).
 
 ## Polars R Package 0.14.1
 
