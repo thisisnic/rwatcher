@@ -4,7 +4,7 @@
 
 ### Breaking changes due to Rust-polars update
 
--   rust-polars is updated to 0.38.0 (#865).
+-   rust-polars is updated to 0.38.1 (#865, #872).
     -   in `$pivot()`, arguments `aggregate_function`, `maintain_order`, 
         `sort_columns` and `separator` must be named. Values that are passed
         by position are ignored.
@@ -46,6 +46,16 @@
 -   `$min()` and `max()` now work on categorical variables (#868).
 -   New methods for the `list` subnamespace: `$n_unique()`, `$gather_every()` 
     (#869).
+-   Converts `clock_time_point` and `clock_zoned_time` objects from
+    the `{clock}` package to Polars datetime type (#861).
+-   New methods for the `name` subnamespace: `$prefix_fields()` and
+    `suffix_fields()` (#873).
+
+### Bug fixes
+
+-   R no longer crashes when calling an invalid Polars object that points
+    to a null pointer (#874). This was occurring, such as when a Polars object
+    was saved in an RDS file and loaded from another session.
 
 ## Polars R Package 0.14.1
 
