@@ -1,5 +1,19 @@
 # tidypolars (development version)
 
+## Breaking changes and deprecations
+
+* `as_polars()` is now removed. It was deprecated in 0.6.0. Use `as_polars_df()`
+  or `as_polars_lf()` instead.
+  
+* `to_r()` is now removed. It was deprecated in 0.6.0. Use `as.data.frame()`
+  or `as_tibble()` instead.
+  
+* For consistency with `dplyr`, the behavior of `collect()` will change in 0.8.0
+  as it will perform the lazy query **and** convert the result to a standard
+  `data.frame`. For now, `collect()` only throws a warning about this future 
+  change. It is recommended to use `compute()` to only perform the query and get
+  a Polars DataFrame as output (#101).
+
 ## New features
 
 * Several improvements and changes for `pivot_wider()` (#95):
