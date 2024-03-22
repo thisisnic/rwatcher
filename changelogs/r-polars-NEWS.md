@@ -25,6 +25,15 @@
     is renamed to `time_zone` (#944).
   - In `$dt$replace_time_zone()`, all arguments except `time_zone` must be named
     arguments (#944).
+  - `pl$date_range()` is completely rewritten (#950).
+    - The argument `end` must be specified.
+    - The default value of `interval` is changed to `"1d"`.
+    - The unused argument (not working in recent versions) `explode` is removed.
+    - The arguments `closed`, `time_unit`, and `time_zone` must be named arguments.
+    - No longer accepts numeric values to `start` and `end`.
+    - The usage of `pl$date_range()` to create a range of `Datetime` data type is deprecated.
+      `pl$date_range()` will always create a range of `Date` data type in the future.
+      Please use `pl$datetime_range()` if you want to create a range of `Datetime` instead.
 - The argument `columns` in `$drop()` is removed. `$drop()` now accepts several
   character scalars, such as `$drop("a", "b", "c")` (#912).
 - In `pl$col()`, the `name` argument is removed, and the `...` argument no longer
@@ -34,6 +43,12 @@
 - `<Series>$to_r_list()` is renamed `<Series>$to_list()` (#938).
 - Removed `<Series>$to_r_vector()` which was an old alias for
   `<Series>$to_vector()` (#938).
+- In `$str$strptime()`, `$str$to_date()`, `$str$to_datetime()`, and
+  `$str$to_time()`, all arguments (except the first one) must be named (#939).
+- In `$str$strptime()`, the argument `datatype` is renamed `dtype` (#939).
+- `$unique()` for `DataFrame` and `LazyFrame` have several changes (#953):
+  - New default value `"any"` for argument `keep`.
+  - Arguments `keep` and `maintain_order` must be named.
 
 ### New features
 
@@ -41,10 +56,15 @@
   Expr of class datetime, date, and time via columns and literals (#918).
 - New function `pl$arg_where()` to get the indices that match a condition (#922).
 - New function `is_polars_dtype()` (#927).
-- New method `<LazyFrame>to_dot()` to print the query plan of a LazyFrame with
+- New function `pl$datetime_range()` (#950).
+- New method `<LazyFrame>$to_dot()` to print the query plan of a LazyFrame with
   graphviz dot syntax (#928).
 - Argument `ambiguous` can now take the value `"null"` to convert ambigous
   datetimes to null values (#937).
+### Bug fixes
+
+- The `join_nulls` and `validate` arguments of `<DataFrame>$join()` now work
+  correctly (#945).
 - Export the `Duration` datatype (#955).
 
 ## Polars R Package 0.15.1
