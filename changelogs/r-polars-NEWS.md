@@ -62,6 +62,8 @@
 - Argument `ambiguous` can now take the value `"null"` to convert ambigous
   datetimes to null values (#937).
 - New function `pl$mean_horizontal()` (#959).
+- New argument `raise_if_undetermined` of `<Expr>$meta$output_name()` (#961).
+- New function `pl$arg_sort_by()` (#929).
 
 ### Bug fixes
 
