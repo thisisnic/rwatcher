@@ -14,7 +14,9 @@
 ### Other breaking changes
 
 - Several functions have been rewritten to match the behavior of Python Polars.
+
   - In `pl$Series()` arguments are changed.
+
     - The argument `x` is renamed `values` (#933).
     - The argument `values` has a new default value `NULL` (#966).
     - Using positional arguments in `pl$Series()` throws a warning, since the
@@ -46,6 +48,10 @@
     - In `<LazyFrame>$sink_*` functions, the first argument is now `path`.
   - In `$dt$convert_time_zone()` and `$dt$replace_time_zone()`, the `tz` argument
     is renamed to `time_zone` (#944).
+  - In `<DataFrame>$rolling()`, `<LazyFrame>$rolling()`, `<DataFrame>$group_by_dynamic()`
+    and `<LazyFrame>$group_by_dynamic()`, the `by` argument is renamed to `group_by` (#983).
+  - In `<DataFrame>$rolling()` and `<DataFrame>$group_by_dynamic()`, all arguments
+    except `index_column` must be named arguments (#983).
   - In `$dt$replace_time_zone()`, all arguments except `time_zone` must be named
     arguments (#944).
   - In `$bin$decode()`, the `strict` argument must be a named argument (#980).
@@ -58,6 +64,8 @@
     - The usage of `pl$date_range()` to create a range of `Datetime` data type is deprecated.
       `pl$date_range()` will always create a range of `Date` data type in the future.
       Please use `pl$datetime_range()` if you want to create a range of `Datetime` instead.
+    - `<DataFrame>$get_columns()` now returns an unnamed list instead of a named list (#991).
+
 - The argument `columns` in `$drop()` is removed. `$drop()` now accepts several
   character scalars, such as `$drop("a", "b", "c")` (#912).
 - In `pl$col()`, the `name` argument is removed, and the `...` argument no longer
@@ -67,6 +75,10 @@
 - `<Series>$to_r_list()` is renamed `<Series>$to_list()` (#938).
 - Removed `<Series>$to_r_vector()` which was an old alias for
   `<Series>$to_vector()` (#938).
+- In `$str$contains()`, the arguments `literal` and `strict` should be named arguments (#982).
+- In `$str$contains_any()`, the `ascii_case_insensitive` argument must be named (#986).
+- In `$str$count_matches()`, `$str$replace()` and `$str$replace_all()`,
+  the `literal` argument must be named (#987).
 - In `$str$strptime()`, `$str$to_date()`, `$str$to_datetime()`, and
   `$str$to_time()`, all arguments (except the first one) must be named (#939).
 - In `$str$strptime()`, the argument `datatype` is renamed `dtype` (#939).
@@ -94,6 +106,10 @@
 - Export the `Duration` datatype (#955).
 - New functions `pl$int_range()` and `pl$int_ranges()` (#968).
 - New string method `$str$extract_groups()` (#979).
+- New string method `$str$find()` (#985).
+- New argument `n` in `$str$replace()` (#987).
+- Method `$over()` gains an argument `mapping_strategy` (#984, #988).
+- New method `$item()` for `DataFrame` and `Series` (#992).
 
 ### Bug fixes
 
