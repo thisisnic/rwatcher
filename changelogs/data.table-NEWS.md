@@ -2,6 +2,10 @@
 
 # data.table [v1.15.99](https://github.com/Rdatatable/data.table/milestone/30)  (in development)
 
+## BREAKING CHANGES
+
+1. Usage of comma-separated character strings representing multiple columns in `data.table()`'s `key=` argument and `[`'s `by=`/`keyby=` arguments is deprecated, [#4357](https://github.com/Rdatatable/data.table/issues/4357). While sometimes convenient, ultimately it introduces inconsistency in implementation that is not worth the benefit to maintain. NB: this hard deprecation is temporary in the development version. Before release, it will soften into the normal data.table deprecation cycle starting from introducing the new behavior with an option, then changing the default for the option with a warning, then upgrading the warning to an error before finally removing the option and the error.
+
 ## NEW FEATURES
 
 1. `print.data.table()` shows empty (`NULL`) list column entries as `[NULL]` for emphasis. Previously they would just print nothing (same as for empty string). Part of [#4198](https://github.com/Rdatatable/data.table/issues/4198). Thanks @sritchie73 for the proposal and fix.
@@ -55,6 +59,8 @@
 7. Updated a test relying on `>` working for comparing language objects to a string, which will be deprecated by R, [#5977](https://github.com/Rdatatable/data.table/issues/5977); no user-facing effect. Thanks to R-core for continuously improving the language.
 
 8. OpenMP detection when building from source on Mac is improved, [#4348](https://github.com/Rdatatable/data.table/issues/4348). Thanks @jameshester and @kevinushey for the request and @kevinushey for the PR, @jameslamb for the advice and @s-u of R-core for ensuring CRAN machines are configured to support the uxpected setup.
+
+9. `print.data.table` now handles combination multibyte characters correctly when truncating wide string entries, [#5096](https://github.com/Rdatatable/data.table/issues/5096). Thanks to @MichaelChirico for the report and @joshhwuu for the fix.
 
 # data.table [v1.15.0](https://github.com/Rdatatable/data.table/milestone/29)  (30 Jan 2024)
 
