@@ -63,6 +63,7 @@
     - In `$dt$convert_time_zone()` and `$dt$replace_time_zone()`, the `tz`
       argument is renamed to `time_zone` (#944).
     - In `$str$strptime()`, the argument `datatype` is renamed to `dtype` (#939).
+    - In `$str$parse_int()`, argument `radix` is renamed to `base` (#1034).
 
   2. Change in the way arguments are passed:
 
@@ -85,6 +86,8 @@
       `$str$to_time()`, all arguments (except the first one) must be named (#939).
     - In `pl$date_range()`, the arguments `closed`, `time_unit`, and `time_zone`
       must be named (#950).
+    - In `$set_sorted()` and `$sort_by()`, argument `descending` must be named
+      (#1034).
     - In `pl$Series()`, using positional arguments throws a warning, since the
       argument positions will be changed in the future (#966).
 
@@ -127,6 +130,12 @@
     - In `pl$date_range()`, the argument `end` must be specified and the default
       value of `interval` is changed to `"1d"`. The arguments `start` and `end`
       no longer accept numeric values (#950).
+    - In `pl$scan_parquet()`, the default value of the argument `rechunk` is
+      changed from `TRUE` to `FALSE` (#1033).
+    - In `pl$scan_parquet()` and `pl$read_parquet()`, the argument `parallel`
+      only accepts `"auto"`, `"columns"`, `"row_groups"`, and `"none"`.
+      Previously, it also accepted upper-case notation of `"auto"`, `"columns"`,
+      `"none"`, and `"RowGroups"` instead of `"row_groups"` (#1033).
 
 
 - The usage of `pl$date_range()` to create a range of `Datetime` data type is
@@ -144,6 +153,7 @@
   early stage of this package and does not exist in other language APIs (#1028).
 - The following deprecated functions are now removed: `pl$threadpool_size()`,
   `<DataFrame>$with_row_count()`, `<LazyFrame>$with_row_count()` (#965).
+- In `$group_by_dynamic()`, the first datapoint is always preserved (#1034).
 
 
 ### New features
@@ -158,6 +168,7 @@
   - `pl$int_range()` and `pl$int_ranges()` (#968)
   - `pl$mean_horizontal()` (#959)
   - `is_polars_dtype()` (#927).
+  - `pl$read_ipc()` (#1033).
 
 - New methods:
 
@@ -181,6 +192,9 @@
     when a datetime doesn't exist.
   - `mapping_strategy` in `$over()` (#984, #988).
   - `raise_if_undetermined` in `$meta$output_name()` (#961).
+  - `null_on_oob` in `$arr$get()` and `$list$get()` to determine what happens
+    when the index is out of bounds (#1034).
+  - `nulls_last`, `multithreaded`, and `maintain_order` in `$sort_by()` (#1034).
 
 - Other:
 
@@ -188,7 +202,7 @@
     more classes to Series properly (#1015).
   - Export the `Duration` datatype (#955).
   - New active binding `<Series>$struct$fields` (#1002).
-  - rust-polars is updated to 0.38.3 (#937).
+  - rust-polars is updated to 0.39.0 (#937, #1034).
 
 
 ### Bug fixes
@@ -203,6 +217,8 @@
 - The dependent crate `extendr-api` is updated to 2024-03-31 unreleased version (#995).
   The issue that the R session crashes when a panic occurs in the Rust side is resolved.
   Thanks @CGMossa for the upstream fix.
+- The `parallel` argument of `pl$scan_parquet()` and `pl$read_parquet()` now works
+  correctly (#1033). Previously, any correct value was treated as `"auto"`.
 
 ## Polars R Package 0.15.1
 
