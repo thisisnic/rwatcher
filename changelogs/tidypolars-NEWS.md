@@ -2,8 +2,13 @@
 
 ## New features
 
-* Add support for `all()`, `any()`, `dplyr::n_distinct()`, `length()`, `rev()`, 
-  `unique()`.
+* Add support for `all()`, `any()`, `dplyr::consecutive_id()`,   
+  `dplyr::n_distinct()`, `length()`, `rev()`, `unique()`.
+
+## Bug fixes
+
+* Local variables in custom functions could not be used in tidypolars functions
+  (reported in a blog post of Art Steinmetz). This is now fixed.
 
 
 # tidypolars 0.7.0
