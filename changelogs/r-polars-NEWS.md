@@ -4,8 +4,9 @@
 
 ### Breaking changes
 
-- Updated rust-polars to 0.40.0 (#1104):
-  - `$join()` gains an argument `coalesce`.
+- Updated rust-polars to unreleased version (> 0.40.0) (#1104, #1110):
+  - In `$join()`, there is a new argument `coalesce` and the `how` options now
+    accept `"full"` instead of `"outer"` and `"outer_coalesce"`.
   - `$top_k()` and `$bottom_k()` gain three arguments `nulls_last`,
     `maintain_order` and `multithreaded`.
   - All `$rolling_*()` functions lose the arguments `by`, `closed` and
@@ -17,6 +18,14 @@
     pattern.
   - `$is_not_nan()` on a `null` value (`NA` in R) now returns `null`. Previously,
     it returned `TRUE`.
+  - In `$reshape()`, argument `dims` is renamed `dimensions` and there is a new
+    argument `nested_type` specifying if the output should be of type List or
+    Array.
+  - In `$value_counts()`, all arguments must be named and there is a new argument
+    `name` to specify the name of the output.
+  - In all functions accepting optimization parameter (such as
+    `projection_pushdown`), there is a new parameter `cluster_with_columns` to
+    combine sequential independent calls to `$with_columns()`.
 
 - As warned in v0.16.0, the order of arguments in `pl$Series` is changed (#1071).
   The first argument is now `name`, and the second argument is `values`.
@@ -29,7 +38,11 @@
   like `pl$Struct(a = pl$Boolean)` (#1053).
 - In `$all()` and `$any()`, the argument `drop_nulls` is renamed `ignore_nulls`,
   and this argument must be named (#1050).
-- New method `$struct$with_fields()` (#1109).
+- New method `$struct$with_fields()` (#1109) and new function `pl$field()` to
+  be used in expressions in `$struct$with_fields()` (#1113).
+- New methods for `RPolarsDataType`: `$is_enum()`, `$is_categorical()`,
+  `$is_known()`, `$is_string()`, `$contains_views()`, `$contains_categorical()`
+  (#1112).
 
 ## Polars R Package 0.16.4
 
