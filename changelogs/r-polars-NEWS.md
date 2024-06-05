@@ -2,6 +2,8 @@
 
 ## Polars R Package (development version)
 
+## Polars R Package 0.17.0
+
 ### Breaking changes
 
 - Updated rust-polars to unreleased version (> 0.40.0) (#1104, #1110, #1117, #1124):
@@ -31,7 +33,7 @@
     Sortedness is now verified in a quick manner, so this argument is no longer needed
     (pola-rs/polars#16494).
   - `$name$map()` stacks on Linux, so this method is deprecated and the document
-    is removed. Please use other methods including `$rename_with()` instead (#1123).
+    is removed. Please use other methods like `<LazyFrame>$rename(<function>)` instead (#1123).
 - As warned in v0.16.0, the order of arguments in `pl$Series` is changed (#1071).
   The first argument is now `name`, and the second argument is `values`.
 - `$to_struct()` on an Expr is removed. This method is now only available for
@@ -52,14 +54,17 @@
   `time_unit` (#1116).
 - The default value of the `rechunk` argument of `pl$concat()` is changed from
   `TRUE` to `FALSE` (#1125).
+- In `$rename()` for LazyFrame and DataFrame, key-value pairs of names are changed to
+  `old_name = "new_name"` instead of `new_name = "old_name"` (#1129).
+- In `$rename()` for LazyFrame and DataFrame, no argument is not allowed (#1129).
 - In all `$rolling_*()` functions, the arguments `center` and `ddof` must be
   named (#1115).
 
 ### New features
 
-- Experimental feature `$rename_with()` for LazyFrame and DataFrame.
+- Allow specify a function in `$rename()` for LazyFrame and DataFrame.
   They are equivalent to `polars.LazyFrame.rename(mapping: Callable[[str], str])`
-  or `polars.DataFrame.rename(mapping: Callable[[str], str])` in Python Polars (#1122).
+  or `polars.DataFrame.rename(mapping: Callable[[str], str])` in Python Polars (#1122, #1129).
 
 ## Polars R Package 0.16.4
 
