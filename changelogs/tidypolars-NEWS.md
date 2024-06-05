@@ -1,5 +1,13 @@
 # tidypolars (development version)
 
+## New features
+
+* Add support for `%%` and `%/%`.
+
+# tidypolars 0.8.0
+
+`tidypolars` requires `polars` >= 0.17.0.
+
 ## Breaking changes
 
 * As announced in `tidypolars` 0.7.0, the behavior of `collect()` has changed.
@@ -35,6 +43,9 @@
   `.id` column will use the names of the elements (#116).
   
 * It is now possible to rename variables in `select()` (#117).
+
+* Add support for argument `na_matches` in all join functions (except 
+  `cross_join()` that doesn't need it) (#109).
 
 ## Bug fixes
 
