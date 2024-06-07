@@ -4,6 +4,13 @@
 
 * Add support for `%%` and `%/%`.
 
+* Better handling of missing values to match `R` behavior. In the following
+  functions, if there is at least one missing value and `na.rm = FALSE` (the 
+  default), then the output will be `NA`: `"max()"`, `"mean()"`, `"median()"`,
+  `"min()"`, `"sd()"`, `"sum()"`, `"var()"` (#120).
+  
+* New argument `cluster_with_columns` in `collect()`, `compute()`, and `fetch()`.
+
 # tidypolars 0.8.0
 
 `tidypolars` requires `polars` >= 0.17.0.
