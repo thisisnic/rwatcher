@@ -8,12 +8,19 @@
   
   - from package `dplyr`: `dense_rank()`, `row_number()`.
 
+  - from package `lubridate`: `wday()`.
+
 * Better handling of missing values to match `R` behavior. In the following
   functions, if there is at least one missing value and `na.rm = FALSE` (the 
   default), then the output will be `NA`: `max()`, `mean()`, `median()`, `min()`,
   `sd()`, `sum()`, `var()` (#120).
   
 * New argument `cluster_with_columns` in `collect()`, `compute()`, and `fetch()`.
+
+* Add a global option `tidypolars_unknown_args` to control what happens when 
+  `tidypolars` doesn't know how to handle an argument in a function. The default
+  is to warn and the only other accepted value is `"error"`.
+
 
 # tidypolars 0.8.0
 
