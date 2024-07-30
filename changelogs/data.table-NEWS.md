@@ -2,6 +2,10 @@
 
 # data.table [v1.15.99](https://github.com/Rdatatable/data.table/milestone/30)  (in development)
 
+## BREAKING CHANGE
+
+1. `` `[.data.table` `` is un-exported again. This was exported to support an experimental feature (`DT()` functional form of `[`) that never made it to release, but we forgot to claw back this export in the NAMESPACE; sorry about that. We didn't find anyone calling the method directly (which is inadvisable to begin with).
+
 ## NEW FEATURES
 
 1. `print.data.table()` shows empty (`NULL`) list column entries as `[NULL]` for emphasis. Previously they would just print nothing (same as for empty string). Part of [#4198](https://github.com/Rdatatable/data.table/issues/4198). Thanks @sritchie73 for the proposal and fix.
@@ -44,6 +48,10 @@
 
 `rbindlist(l, ignore.attr=TRUE)` and `rbind` also gains argument `ignore.attr` to manually deactivate the safety-net of binding columns with different column classes, [#3911](https://github.com/Rdatatable/data.table/issues/3911), [#5542](https://github.com/Rdatatable/data.table/issues/5542). Thanks to @dcaseykc, @fox34, @adrian-quintario, @berg-michael, @arunsrinivasan, @statquant, @pkress, @jrausch12, @therosko, @OfekShilon, @iMissile, @tdhock for the request and @ben-schwen for the PR.
 
+16. `fcase()` supports scalars in conditions (e.g. supplying just `TRUE`), vectors in `default=` (so the default can vary by row), and `default=` is now lazily evaluated, [#5461](https://github.com/Rdatatable/data.table/issues/5461). Thanks @sindribaldur for the feature request, which has been highly requested, @shrektan for doing most of the implementation, and @MichaelChirico for sewing things up.
+
+17. `[.data.table` gains `showProgress`, allowing users to toggle progress printing for large "by" operations, [#3060](https://github.com/Rdatatable/data.table/issues/3060). Reports information such as number of groups processed, total groups, total time elapsed and estimated time until completion. This feature doesn't apply for `GForce` optimized operations. Thanks to @eatonya, @zachmayer for filing FRs, and to everyone else that up-voted/chimed in on the issue. Thanks to @joshhwuu for the PR.
+
 ## BUG FIXES
 
 1. `unique()` returns a copy the case when `nrows(x) <= 1` instead of a mutable alias, [#5932](https://github.com/Rdatatable/data.table/pull/5932). This is consistent with existing `unique()` behavior when the input has no duplicates but more than one row. Thanks to @brookslogan for the report and @dshemetov for the fix.
@@ -75,6 +83,10 @@
 14. `fread(x, colClasses="POSIXct")` now also works for columns containing only NA values, [#6208](https://github.com/Rdatatable/data.table/issues/6208). Thanks to @markus-schaffer for the report, and Benjamin Schwendinger for the fix.
 
 15. `fread()` is more careful about detecting that a file is compressed in bzip2 format, [#6304](https://github.com/Rdatatable/data.table/issues/6304). In particular, we also check the 4th byte is a digit; in rare cases, a legitimate uncompressed CSV file could match 'BZh' as the first 3 bytes. We think an uncompressed CSV file matching 'BZh[1-9]' is all the more rare and unlikely to be encountered in "real" examples. Other formats (zip, gzip) are friendly enough to use non-printable characters in their magic numbers. Thanks @grainnemcguire for the report and @MichaelChirico for the fix.
+
+16. Selecting keyed list columns will retain key without a performance penalty, closes [#4498](https://github.com/Rdatatable/data.table/issues/4498). Thanks to @user9439449 on StackOverflow for the report.
+
+17. Passing functions programmatically with `env=` doesn't produce an opaque error, e.g. `DT[, f(b), env = list(f=sum)]`, [#6026](https://github.com/Rdatatable/data.table/issues/6026). Note that it's much better to pass functions like `f="sum"` instead. Thanks to @MichaelChirico for the bug report and fix.
 
 ## NOTES
 
@@ -165,6 +177,8 @@ d1[d2, on="id", verbose=TRUE]
 ```
 
 This feature resolves [#4387](https://github.com/Rdatatable/data.table/issues/4387), [#2947](https://github.com/Rdatatable/data.table/issues/2947), [#4380](https://github.com/Rdatatable/data.table/issues/4380), and [#1321](https://github.com/Rdatatable/data.table/issues/1321). Thanks to @jangorecki, @jan-glx, and @MichaelChirico for the reports and @jangorecki for implementing.
+
+23. `set()` now adds new columns even if no rows are updated, [#5409](https://github.com/Rdatatable/data.table/issues/5409). This behavior is now consistent with `:=`, thanks to @mb706 for the report and @joshhwuu for the fix.
 
 ## TRANSLATIONS
 
