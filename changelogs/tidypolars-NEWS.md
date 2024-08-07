@@ -2,14 +2,32 @@
 
 ## Deprecations
 
-* `describe()` is deprecated as of tidypolars 0.10.0 and will be removed in 
-  future update. Use `summary()` with the same arguments instead.
+* `describe()` is deprecated as of tidypolars 0.10.0 and will be removed in a 
+  future update. Use `summary()` with the same arguments instead (#127).
 
+* `describe_plan()` and `describe_optimized_plan()` are deprecated as of 
+  tidypolars 0.10.0 and will be removed in a future update. Use `explain()` with
+  `optimized = TRUE/FALSE` instead (#128).
+  
+## New features
+
+* Better error message when a function can come from several packages but only
+  one version is translated (#130).
+  
 ## Bug fixes
 
 * `stringr::str_sub()` now works when both `start` and `end` are negative.
 
 * `stringr::str_starts()` and `stringr::str_ends()` now work with a regex.
+
+* `fill()` doesn't error anymore when `...` is empty. Instead, it returns the 
+  input data.
+  
+* `unite()` now provides a proper error message when `col` is missing.
+
+* `unite()` doesn't error anymore when `...` is empty. Instead, it uses all 
+  variables in the dataset.
+  
 
 # tidypolars 0.9.0
 
