@@ -197,7 +197,7 @@
 
 1. Fix a typo in a Mandarin translation of an error message that was hiding the actual error message, [#6172](https://github.com/Rdatatable/data.table/issues/6172). Thanks @trafficfan for the report and @MichaelChirico for the fix.
 
-2. data.table is now translated into Brazilian Portuguese (`pt_BR`) as well as Mandarin (`zh_CN`). Thanks to the [new translation team](https://github.com/orgs/Rdatatable/teams/brazil) consisting initially of @rffontenelle, @leofontenelle, and @italo-07. The team is open if you'd also like to join and support maintenance of these translations.
+2. data.table is now translated into Brazilian Portuguese ([`pt_BR`](https://github.com/orgs/Rdatatable/teams/brazil)) and Spanish ([`es`](https://github.com/orgs/Rdatatable/teams/spanish)) as well as Mandarin (`zh_CN`). Thanks to the new translation teams consisting initially of @rffontenelle, @leofontenelle, and @italo-07 for Portuguese; and @rikivallalba, @rivaquiroga, and @MaraDestefanis for Spanish. The teams are open if you'd also like to join and support maintenance of these translations.
 
 3. A more helpful error message for using `:=` inside the first argument (`i`) of `[.data.table` is now available in translation, [#6293](https://github.com/Rdatatable/data.table/issues/6293). Previously, the code to display this assumed an earlier message was printed in English. The solution is for calling `:=` directly (i.e., outside the second argument `j` of `[.data.table`) to throw an error of class `dt_invalid_let_error`. Thanks to Spanish translator @rikivillalba for spotting the issue and @MichaelChirico for the fix.
 
@@ -351,7 +351,7 @@
 
 23. `DT[, head(.SD,n), by=grp]` and `tail` are now optimized when `n>1`, [#5060](https://github.com/Rdatatable/data.table/issues/5060) [#523](https://github.com/Rdatatable/data.table/issues/523#issuecomment-162934391). `n==1` was already optimized. Thanks to Jan Gorecki and Michael Young for requesting, and Benjamin Schwendinger for the PR.
 
-24. `setcolorder()` gains `before=` and `after=`, [#4385](https://github.com/Rdatatable/data.table/issues/4358). Thanks to Matthias Gomolka for the request, and both Benjamin Schwendinger and Xianghui Dong for implementing. Also thanks to Manuel López-Ibáñez for testing dev and mentioning needed documentation before release.
+24. `setcolorder()` gains `before=` and `after=`, [#4358](https://github.com/Rdatatable/data.table/issues/4358). Thanks to Matthias Gomolka for the request, and both Benjamin Schwendinger and Xianghui Dong for implementing. Also thanks to Manuel López-Ibáñez for testing dev and mentioning needed documentation before release.
 
 25. `base::droplevels()` gains a fast method for `data.table`, [#647](https://github.com/Rdatatable/data.table/issues/647). Thanks to Steve Lianoglou for requesting, Boniface Kamgang and Martin Binder for testing, and Jan Gorecki and Benjamin Schwendinger for the PR. `fdroplevels()` for use on vectors has also been added.
 
