@@ -1,9 +1,15 @@
 # dplyr (development version)
 
+* Fixed an edge case when coercing data frames to matrices (#7004).
+
 * Fixed an issue where duckplyr's ALTREP data frames were being materialized
   early due to internal usage of `ncol()` (#7049).
 
 * R >=3.6.0 is now explicitly required (#7026).
+
+* `if_any()` and `if_all()` are now fully consistent with `any()` and `all()`. 
+  In particular, when called with empty inputs `if_any()` returns `FALSE` and 
+  `if_all()` returns `TRUE` (#7059, @jrwinget).
 
 # dplyr 1.1.4
 
