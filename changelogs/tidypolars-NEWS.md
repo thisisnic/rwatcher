@@ -14,6 +14,10 @@
   
 ## New features
 
+* Add support for more functions:
+
+  - from package `base`: `substr()`.
+
 * Better error message when a function can come from several packages but only
   one version is translated (#130).
   
@@ -38,9 +42,13 @@
   list to `.fns`. This works with `dplyr` but cannot work with `tidypolars`
   (#135).
   
+* Added support for argument `.add` in `group_by()`.
+  
 ## Bug fixes
 
 * `stringr::str_sub()` now works when both `start` and `end` are negative.
+
+* Fixed a bug in `str_sub()` when `start` was greater than 1.
 
 * `stringr::str_starts()` and `stringr::str_ends()` now work with a regex.
 
