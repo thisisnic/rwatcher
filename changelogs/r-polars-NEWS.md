@@ -22,7 +22,13 @@
   For now, `future = FALSE` can be replaced by `compat_level = FALSE` (#1183).
 - In `$scan_parquet()` and `$read_parquet()`, the default value of
   `hive_partitioning` is now `NULL` (#1189).
-- In `$dt$epoch()`, the argument `tu` is renamed to `time_unit` (#1196). 
+- In `$dt$epoch()`, the argument `tu` is renamed to `time_unit` (#1196).
+- In `$fill_nan()` for `DataFrame`, `LazyFrame` and `Expr`, the argument is
+  renamed `value` (#1198).
+- `$shift_and_fill()` is removed and replaced by a new argument `fill_value` in
+  `$shift()`. `$shift_and_fill(fill_value, periods)` can be replaced by
+  `$shift(n, fill_value)` (#1201).
+- In `$shift()` for various `Expr`, the argument `periods` is renamed `n` (#1201).
 
 ### New features
 
@@ -42,6 +48,9 @@
   `hive_partitioning`, `hive_schema`, and `try_parse_hive_dates` (#1183).
 - `$scan_parquet()` and `$read_parquet()` gain two new arguments for more control
   on importing hive partitions: `hive_schema` and `try_parse_hive_dates` (#1189).
+- New method `$gather_every()` for `LazyFrame` and `DataFrame` (#1199).
+- `$glimpse()` for `DataFrame` has two new arguments `max_items_per_column` and
+  `max_colname_length` (#1200).
 
 ### Other changes
 
