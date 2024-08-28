@@ -1,6 +1,12 @@
 **If you are viewing this file on CRAN, please check [latest news on GitHub](https://github.com/Rdatatable/data.table/blob/master/NEWS.md) where the formatting is also better.**
 
-# data.table [v1.15.99](https://github.com/Rdatatable/data.table/milestone/30)  (in development)
+# data.table [v1.16.99](https://github.com/Rdatatable/data.table/milestone/31)  (in development)
+
+## NOTES
+
+1. Tests run again when some Suggests packages are missing, [#6411](https://github.com/Rdatatable/data.table/issues/6411). Thanks @aadler for the note and @MichaelChirico for the fix.
+
+# data.table [v1.16.0](https://github.com/Rdatatable/data.table/milestone/30)  (25 August 2024)
 
 ## BREAKING CHANGES
 
