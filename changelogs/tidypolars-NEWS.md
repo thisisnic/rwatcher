@@ -1,4 +1,14 @@
-# tidypolars (development version)
+# tidypolars 0.10.1
+
+## Bug fixes
+
+* Do not error when handling columns with datatype `Null`. Note that converting
+  those columns to R with `as.data.frame()`, `as_tibble()`, or `collect()` is 
+  still an issue as of `polars` 0.19.1.
+
+# tidypolars 0.10.0
+
+`tidypolars` requires `polars` >= 0.19.1.
 
 ## Breaking changes and deprecations
 
@@ -21,6 +31,8 @@
 * Better error message when a function can come from several packages but only
   one version is translated (#130).
   
+* `row_number()` now works without argument (#131).
+
 * New functions to import data as Polars DataFrames and LazyFrames (#136):
 
   * `read_<format>_polars()` to import data as a Polars DataFrame;
@@ -69,6 +81,8 @@
 * `replace_na()` no longer converts the column to the datatype of the replacement,
   e.g. `data |> replace_na("a")` will error if the input data is numeric.
   
+* `n_distinct()` now correctly applies the `na.rm` argument when several columns
+  are passed as input (#137).
 
 # tidypolars 0.9.0
 
