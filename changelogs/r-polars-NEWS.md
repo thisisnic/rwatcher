@@ -1,9 +1,15 @@
 # NEWS
 
+## Polars R Package (development version)
+
+### Bug fixes
+
+- Converting data of datatype `Null` to R doesn't error anymore. It now creates
+  a column filled with `NA` (#1217).
+
 ## Polars R Package 0.19.1
 
-- Add the option `-z noexecstack` for compilation on Linux to avoid the error
-  `version GLIBC_2.39' not found` (#1212).
+- This is a maintenance release. No user facing changes.
 
 ## Polars R Package 0.19.0
 
