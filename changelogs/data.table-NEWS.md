@@ -53,6 +53,10 @@ rowwiseDT(
     # [1] "V1" "b" "c"
     ```
 
+5. Queries like `DT[, min(x):max(x)]` now work as expected, i.e. the same as `DT[, seq(min(x), max(x))]` or `with(DT, min(x):max(x))`, [#2069](https://github.com/Rdatatable/data.table/issues/2069). Shorthand like `DT[, a:b]` meaning "select from columns `a` through `b`" still works. Thanks to @franknarf1 for reporting and @jangorecki for the fix.
+
+6. Fixed a segfault in `fcase()`, [#6448](https://github.com/Rdatatable/data.table/issues/6448). Thanks @ethanbsmith for reporting with reprex, @aitap for finding the root cause, and @MichaelChirico for the PR.
+
 ## NOTES
 
 1. Tests run again when some Suggests packages are missing, [#6411](https://github.com/Rdatatable/data.table/issues/6411). Thanks @aadler for the note and @MichaelChirico for the fix.
@@ -64,6 +68,8 @@ rowwiseDT(
 4. The translations submitted for 1.16.0 are now actually shipped with the package -- our deepest apologies to the translators for the omission. We have added a CI check to ensure that the .mo binaries which get shipped with the package are always up-to-date.
 
 5. Some grouping operations run much faster under `verbose=TRUE`, [#6286](https://github.com/Rdatatable/data.table/issues/6286). Thanks @joshhwuu for the report and fix. This overhead was not present on Windows. As a rule, users should expect `verbose=TRUE` operations to run more slowly, as extra statistics might be calculated as part of the report; here was a case where the overhead was particularly high and the fix was particularly easy.
+
+6. `set()` and `:=` now provide some extra guidance for common incorrect approaches to assigning `NULL` to some rows of a list column. The correct way is to put `list(list(NULL))` on the RHS of `:=` (or `.(.(NULL))` for short). Thanks to @MichaelChirico for the suggestion and @Nj221102 for the implementation.
 
 # data.table [v1.16.0](https://github.com/Rdatatable/data.table/milestone/30)  (25 August 2024)
 
