@@ -39,7 +39,7 @@ jobs:
             git config --global user.name "GHA Bot"
             cp tmp/${{ matrix.page.file }} events/${{ matrix.page.file }}
             git add events/${{ matrix.page.file }}
-            git pull --ff-only
+            rm -rf tmp
             git commit -m "Update ${{matrix.page.name}} changelog"
             git push
         - name: Send email notification
