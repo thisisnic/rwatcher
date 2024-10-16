@@ -1,0 +1,58 @@
+name: Check for event page updates
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '00 1 * * *'
+
+jobs:
+  compare-hashes:
+    name: ${{matrix.pages.name}} updates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+        matrix:
+          page: 
+            [
+                { name: jr-events, file: jr-events.html, url: 'https://jumpingrivers.github.io/meetingsR/events.html' }, 
+                { name: r-consortium, file: r-consortium-events.html, url: 'https://r-consortium.org/news/events' }
+            ]
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+        - name: Get local file hash
+          id: local-hash
+          run: echo "local_hash=$(md5sum events/${{ matrix.page.file }} | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
+        - name: Get remote file
+          id: remote-file
+          run: |
+                  mkdir tmp
+                  curl -s ${{ matrix.page.url }} > tmp/${{ matrix.page.file }}
+        - name: Get remote file hash
+          id: remote-hash
+          run: echo "remote_hash=$(md5sum tmp/${{ matrix.page.file }} | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
+        - name: Update changed files
+          if: ${{ steps.local-hash.outputs.local_hash != steps.remote-hash.outputs.remote_hash }}
+          run: |
+            echo "Hashes do not match!"   
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "GHA Bot"
+            cp tmp/${{ matrix.page.file }} events/${{ matrix.page.file }}
+            git add events/${{ matrix.page.file }}
+            git pull --ff-only
+            git commit -m "Update ${{matrix.page.name}} changelog"
+            git push
+        - name: Send email notification
+          if: ${{ steps.local-hash.outputs.local_hash != steps.remote-hash.outputs.remote_hash }}
+          uses: dawidd6/action-send-mail@v3
+          with:
+            server_address: smtp.gmail.com
+            server_port: 465
+            username: ${{ secrets.MAIL_USERNAME }}
+            password: ${{ secrets.MAIL_PASSWORD }}
+            subject: "${{matrix.page.name}} update"
+            body: "${{matrix.page.name}} has been updated! Please check the changelog at ${{matrix.page.url}}."
+            to: ${{ secrets.MAIL_RECIPIENT }}
+            from: ${{ secrets.MAIL_USERNAME}}
+        
